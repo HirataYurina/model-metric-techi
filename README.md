@@ -63,15 +63,21 @@ gtp is ground truth positive.
 precision = TP / (TP + FP)
 ```
 
-### mAP
+### mAP(mAP50, mAP75, mAP)
 
 mAP - mean accuracy precision.
 
 mAP is a very important metric in object detection.
 
+:fire:what is the meaning of difficult in VOC labels?
+
+**The object has been labeled by difficult does not join in evaluation.** 
+
 ```python
 1.Get positive objects that score > 0.3
-2.sort the positive objects in a descending order
+2.sort the positive objects in a descending order  # we need to make a json file that named by class_name such as class_name_dr.json. And the json has information like [score, file_id, bounding_box]. Then sort it by score. 
+# Also, we need to make gt files named by file_id_gt.json.
+# And the file has information [score, class_name, used, bounding_box].
 3.caculate ap for every class
 4.TP = [0] * num_positive
 5.FP = [0] * num_positive
@@ -103,9 +109,17 @@ The x is False Positive Rate, the y is True Positive Rate.
 
 <img src="./img/roc.jpg" align="center" width="550">
 
+### Log Average Miss Rate
+
+lamr is as small as possible.
+
+lamr = exp(sum(log(mr)) / 9)
+
+Calculated by averaging miss rates at 9 evenly spaced FPPI points between 10e-2 and 10e0, in log-space.s
+
 ### ToDO
 
-* [ ] lamr(log average miss rate)
+* [x] lamr(log average miss rate)
 
 
 
